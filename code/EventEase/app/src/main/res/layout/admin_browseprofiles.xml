@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#223C65"
+    tools:context=".MainActivity">
+
+    <!-- Scrollable Content (everything above the bottom nav) -->
+    <ScrollView
+        android:id="@+id/scroll_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_nav"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="8dp">
+
+            <!-- Header -->
+            <TextView
+                android:id="@+id/main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#9EFFF1"
+                android:padding="16dp"
+                android:text="EventEase"
+                android:textColor="#223C65"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <!-- Back Button -->
+            <Button
+                android:id="@+id/back_button"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="Back"
+                android:backgroundTint="#9EFFF1"
+                android:textColor="#223C65"
+                android:layout_margin="12dp" />
+
+            <!-- Admin Title -->
+            <TextView
+                android:id="@+id/AdminTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Admin"
+                android:textStyle="bold"
+                android:textColor="#9EFFF1"
+                android:textSize="26sp"
+                android:gravity="center"
+                android:layout_marginTop="4dp" />
+
+            <!-- Search row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:hint="Search..."
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:textColor="#FFFFFFFF"
+                    android:textColorHint="#B3C3D9"
+                    android:background="@drawable/bg_edittext" />
+
+                <ImageButton
+                    android:id="@+id/btn_search"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_icon_button"
+                    android:backgroundTint="#9EFFF1"
+                    android:contentDescription="Search"
+                    android:src="@android:drawable/ic_menu_search"
+                    android:tint="#223C65" />
+            </LinearLayout>
+
+            <!-- Profile Grid (each square acts as a button) -->
+            <GridLayout
+                android:id="@+id/grid_profiles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:alignmentMode="alignMargins"
+                android:useDefaultMargins="true"
+                android:padding="16dp">
+
+                <!-- Profile Block 1 -->
+                <Button
+                    android:id="@+id/profile1"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="#2F4D7A"
+                    app:cornerRadius="10dp" />
+
+                <!-- Profile Block 2 -->
+                <Button
+                    android:id="@+id/profile2"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="#2F4D7A"
+                    app:cornerRadius="10dp" />
+
+                <!-- Profile Block 3 -->
+                <Button
+                    android:id="@+id/profile3"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="#2F4D7A"
+                    app:cornerRadius="10dp" />
+
+                <!-- Profile Block 4 -->
+                <Button
+                    android:id="@+id/profile4"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:backgroundTint="#2F4D7A"
+                    app:cornerRadius="10dp" />
+            </GridLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Fixed Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#9EFFF1"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_bottom_nav" />
+
+</RelativeLayout>
