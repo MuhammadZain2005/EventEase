@@ -153,8 +153,8 @@ public class DiscoverFragment extends Fragment {
         for (DocumentSnapshot doc : snapshots.getDocuments()) {
             Event event = doc.toObject(Event.class);
             if (event == null) continue;
-            if (TextUtils.isEmpty(event.id)) {
-                event.id = doc.getId();
+            if (TextUtils.isEmpty(event.getId())) {
+                event.setId(doc.getId());
             }
             events.add(event);
         }

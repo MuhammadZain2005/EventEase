@@ -429,7 +429,7 @@ public class EventDetailActivity extends AppCompatActivity {
     }
 
     private void navigateToMain(String target) {
-        android.content.Intent intent = new android.content.Intent(this, com.EventEase.MainActivity.class);
+        android.content.Intent intent = new android.content.Intent(this, com.example.eventease.MainActivity.class);
         intent.putExtra("nav_target", target);
         intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);

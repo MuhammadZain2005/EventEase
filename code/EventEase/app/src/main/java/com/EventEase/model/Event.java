@@ -1,173 +1,185 @@
 package com.EventEase.model;
 
-import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class Event {
+
     public String id;
     public String title;
-    public long startsAtEpochMs;    // millis UTC
     public String location;
+    public long startsAtEpochMs;
     public int capacity;
-    public int waitlistCount; // Current number of people on waitlist (deprecated - use waitlist.size())
-    public List<String> waitlist; // UIDs of entrants on waitlist
-    public List<String> admitted; // UIDs of admitted entrants
-    @Nullable public String notes;
-    @Nullable public String guidelines; // Event-specific rules and requirements
-    @Nullable public String posterUrl;
+    public String notes;
+    public String guidelines;
+    public String posterUrl;
+    public int waitlistCount;
+
+    public ArrayList<String> waitlist;
+    public ArrayList<String> admitted;
     public String organizerId;
     public long createdAtEpochMs;
-    @Nullable public String qrPayload; // string we encode in QR (e.g., "event:<id>")
+    public String qrPayload;
 
-    public Event() { /* for Firestore */ }
+    private ArrayList<String> selectedEntrants;
+    private ArrayList<String> notSelectedEntrants;
+    private ArrayList<String> cancelledEntrants;
 
-    public static Event newDraft(String organizerId) {
-        Event e = new Event();
-        e.id = UUID.randomUUID().toString();
-        e.organizerId = organizerId;
-        e.createdAtEpochMs = System.currentTimeMillis();
-        e.waitlist = new ArrayList<>();
-        e.admitted = new ArrayList<>();
-        return e;
+    public Event() {
+        selectedEntrants = new ArrayList<>();
+        notSelectedEntrants = new ArrayList<>();
+        cancelledEntrants = new ArrayList<>();
+        waitlist = new ArrayList<>();
+        admitted = new ArrayList<>();
     }
 
-    public Map<String,Object> toMap() {
-        Map<String,Object> m = new HashMap<>();
-        m.put("id", id);
-        m.put("title", title);
-        m.put("startsAtEpochMs", startsAtEpochMs);
-        m.put("location", location);
-        m.put("capacity", capacity);
-        m.put("waitlistCount", waitlistCount);
-        m.put("waitlist", waitlist != null ? waitlist : new ArrayList<>());
-        m.put("admitted", admitted != null ? admitted : new ArrayList<>());
-        m.put("notes", notes);
-        m.put("guidelines", guidelines);
-        m.put("posterUrl", posterUrl);
-        m.put("organizerId", organizerId);
-        m.put("createdAtEpochMs", createdAtEpochMs);
-        m.put("qrPayload", qrPayload);
-        return m;
-    }
-    
-    public static Event fromMap(Map<String, Object> m) {
-        if (m == null) return null;
-        
-        Event e = new Event();
-        e.id = (String) m.get("id");
-        e.title = (String) m.get("title");
-        
-        Object startsAt = m.get("startsAtEpochMs");
-        e.startsAtEpochMs = startsAt != null ? ((Number) startsAt).longValue() : 0;
-        
-        e.location = (String) m.get("location");
-        
-        Object cap = m.get("capacity");
-        e.capacity = cap != null ? ((Number) cap).intValue() : 0;
-        
-        Object wc = m.get("waitlistCount");
-        e.waitlistCount = wc != null ? ((Number) wc).intValue() : 0;
-        
-        // Read waitlist array
-        Object waitlistObj = m.get("waitlist");
-        if (waitlistObj instanceof List) {
-            @SuppressWarnings("unchecked")
-            List<String> waitlistList = (List<String>) waitlistObj;
-            e.waitlist = waitlistList != null ? new ArrayList<>(waitlistList) : new ArrayList<>();
-        } else {
-            e.waitlist = new ArrayList<>();
-        }
-        
-        // Read admitted array
-        Object admittedObj = m.get("admitted");
-        if (admittedObj instanceof List) {
-            @SuppressWarnings("unchecked")
-            List<String> admittedList = (List<String>) admittedObj;
-            e.admitted = admittedList != null ? new ArrayList<>(admittedList) : new ArrayList<>();
-        } else {
-            e.admitted = new ArrayList<>();
-        }
-        
-        // Sync waitlistCount with waitlist size if not set
-        if (e.waitlistCount == 0 && e.waitlist != null && !e.waitlist.isEmpty()) {
-            e.waitlistCount = e.waitlist.size();
-        }
-        
-        e.notes = (String) m.get("notes");
-        e.guidelines = (String) m.get("guidelines");
-        e.posterUrl = (String) m.get("posterUrl");
-        e.organizerId = (String) m.get("organizerId");
-        
-        Object createdAt = m.get("createdAtEpochMs");
-        e.createdAtEpochMs = createdAt != null ? ((Number) createdAt).longValue() : 0;
-        
-        e.qrPayload = (String) m.get("qrPayload");
-        
-        return e;
+    public Date getStartAt() {
+        return new Date(startsAtEpochMs);
     }
 
-    // Getters and setters
+    public Event(String id, String title, String location, long startsAtEpochMs, int capacity,
+                 String notes, String guidelines, String posterUrl, int waitlistCount,
+                 String organizerId, long createdAtEpochMs, String qrPayload) {
+
+        this.id = id;
+        this.title = title;
+        this.location = location;
+        this.startsAtEpochMs = startsAtEpochMs;
+        this.capacity = capacity;
+        this.notes = notes;
+        this.guidelines = guidelines;
+        this.posterUrl = posterUrl;
+        this.waitlistCount = waitlistCount;
+        this.organizerId = organizerId;
+        this.createdAtEpochMs = createdAtEpochMs;
+        this.qrPayload = qrPayload;
+
+        this.selectedEntrants = new ArrayList<>();
+        this.notSelectedEntrants = new ArrayList<>();
+        this.cancelledEntrants = new ArrayList<>();
+        this.waitlist = new ArrayList<>();
+        this.admitted = new ArrayList<>();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Event fromMap(Map<String, Object> map) {
+        if (map == null) return null;
+
+        Event event = new Event();
+        event.id = (String) map.get("id");
+        event.title = (String) map.get("title");
+        event.location = (String) map.get("location");
+
+        Object startsObj = map.get("startsAtEpochMs");
+        if (startsObj instanceof Number) event.startsAtEpochMs = ((Number) startsObj).longValue();
+
+        Object capacityObj = map.get("capacity");
+        if (capacityObj instanceof Number) event.capacity = ((Number) capacityObj).intValue();
+
+        event.notes = (String) map.get("notes");
+        event.guidelines = (String) map.get("guidelines");
+        event.posterUrl = (String) map.get("posterUrl");
+
+        Object waitlistCountObj = map.get("waitlistCount");
+        if (waitlistCountObj instanceof Number) event.waitlistCount = ((Number) waitlistCountObj).intValue();
+
+        event.organizerId = (String) map.get("organizerId");
+
+        Object createdAtObj = map.get("createdAtEpochMs");
+        if (createdAtObj instanceof Number) event.createdAtEpochMs = ((Number) createdAtObj).longValue();
+
+        event.qrPayload = (String) map.get("qrPayload");
+
+        event.selectedEntrants = new ArrayList<>();
+        if (map.get("selectedEntrants") instanceof List) {
+            for (Object o : (List<?>) map.get("selectedEntrants")) {
+                if (o instanceof String) event.selectedEntrants.add((String) o);
+            }
+        }
+
+        event.notSelectedEntrants = new ArrayList<>();
+        if (map.get("notSelectedEntrants") instanceof List) {
+            for (Object o : (List<?>) map.get("notSelectedEntrants")) {
+                if (o instanceof String) event.notSelectedEntrants.add((String) o);
+            }
+        }
+
+        event.cancelledEntrants = new ArrayList<>();
+        if (map.get("cancelledEntrants") instanceof List) {
+            for (Object o : (List<?>) map.get("cancelledEntrants")) {
+                if (o instanceof String) event.cancelledEntrants.add((String) o);
+            }
+        }
+
+        event.waitlist = new ArrayList<>();
+        if (map.get("waitlist") instanceof List) {
+            for (Object o : (List<?>) map.get("waitlist")) {
+                if (o instanceof String) event.waitlist.add((String) o);
+            }
+        }
+
+        event.admitted = new ArrayList<>();
+        if (map.get("admitted") instanceof List) {
+            for (Object o : (List<?>) map.get("admitted")) {
+                if (o instanceof String) event.admitted.add((String) o);
+            }
+        }
+
+        return event;
+    }
+
+
+
     public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
     public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-
-    public long getStartsAtEpochMs() { return startsAtEpochMs; }
-    public void setStartsAtEpochMs(long startsAtEpochMs) { this.startsAtEpochMs = startsAtEpochMs; }
-
-    // Helper to get as Date for backward compatibility with existing code
-    public Date getStartAt() { 
-        return startsAtEpochMs > 0 ? new Date(startsAtEpochMs) : null; 
-    }
-
-    public int getCapacity() { return capacity; }
-    public void setCapacity(int capacity) { this.capacity = capacity; }
-
-    public int getWaitlistCount() { return waitlistCount; }
-    public void setWaitlistCount(int waitlistCount) { this.waitlistCount = waitlistCount; }
-
     public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
-
-    @Nullable public String getNotes() { return notes; }
-    public void setNotes(@Nullable String notes) { this.notes = notes; }
-
-    @Nullable public String getGuidelines() { return guidelines; }
-    public void setGuidelines(@Nullable String guidelines) { this.guidelines = guidelines; }
-
-    @Nullable public String getPosterUrl() { return posterUrl; }
-    public void setPosterUrl(@Nullable String posterUrl) { this.posterUrl = posterUrl; }
-
+    public long getStartsAtEpochMs() { return startsAtEpochMs; }
+    public int getCapacity() { return capacity; }
+    public String getNotes() { return notes; }
+    public String getGuidelines() { return guidelines; }
+    public String getPosterUrl() { return posterUrl; }
+    public int getWaitlistCount() { return waitlistCount; }
+    public ArrayList<String> getSelectedEntrants() { return selectedEntrants; }
+    public ArrayList<String> getNotSelectedEntrants() { return notSelectedEntrants; }
+    public ArrayList<String> getCancelledEntrants() { return cancelledEntrants; }
+    public ArrayList<String> getWaitlist() { return waitlist; }
+    public ArrayList<String> getAdmitted() { return admitted; }
     public String getOrganizerId() { return organizerId; }
-    public void setOrganizerId(String organizerId) { this.organizerId = organizerId; }
-
     public long getCreatedAtEpochMs() { return createdAtEpochMs; }
-    public void setCreatedAtEpochMs(long createdAtEpochMs) { this.createdAtEpochMs = createdAtEpochMs; }
+    public String getQrPayload() { return qrPayload; }
 
-    @Nullable public String getQrPayload() { return qrPayload; }
-    public void setQrPayload(@Nullable String qrPayload) { this.qrPayload = qrPayload; }
+    public void setSelectedEntrants(ArrayList<String> selectedEntrants) { this.selectedEntrants = selectedEntrants; }
+    public void setNotSelectedEntrants(ArrayList<String> notSelectedEntrants) { this.notSelectedEntrants = notSelectedEntrants; }
+    public void setCancelledEntrants(ArrayList<String> cancelledEntrants) { this.cancelledEntrants = cancelledEntrants; }
+    public void setWaitlist(ArrayList<String> waitlist) { this.waitlist = waitlist; }
+    public void setAdmitted(ArrayList<String> admitted) { this.admitted = admitted; }
 
-    public List<String> getWaitlist() { 
-        return waitlist != null ? waitlist : new ArrayList<>(); 
-    }
-    public void setWaitlist(List<String> waitlist) { 
-        this.waitlist = waitlist != null ? new ArrayList<>(waitlist) : new ArrayList<>();
-        // Sync waitlistCount
-        if (this.waitlist != null) {
-            this.waitlistCount = this.waitlist.size();
-        }
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("title", title);
+        map.put("location", location);
+        map.put("startsAtEpochMs", startsAtEpochMs);
+        map.put("capacity", capacity);
+        map.put("notes", notes);
+        map.put("guidelines", guidelines);
+        map.put("posterUrl", posterUrl);
+        map.put("waitlistCount", waitlistCount);
+        map.put("organizerId", organizerId);
+        map.put("createdAtEpochMs", createdAtEpochMs);
+        map.put("qrPayload", qrPayload);
+        map.put("selectedEntrants", selectedEntrants);
+        map.put("notSelectedEntrants", notSelectedEntrants);
+        map.put("cancelledEntrants", cancelledEntrants);
+        map.put("waitlist", waitlist);
+        map.put("admitted", admitted);
+        return map;
     }
 
-    public List<String> getAdmitted() { 
-        return admitted != null ? admitted : new ArrayList<>(); 
-    }
-    public void setAdmitted(List<String> admitted) { 
-        this.admitted = admitted != null ? new ArrayList<>(admitted) : new ArrayList<>();
+    public void setId(String id) {
+        this.id = id;
     }
 }
