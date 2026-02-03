@@ -1,143 +1,183 @@
-## CMPUT 301 F25 – Team RISCVI – EventEase
+# EventEase – Event Management & Discovery Platform
 
-### Team Members
-
-| Name                    | CCID      | GitHub Username   |
-|-------------------------|-----------|-------------------|
-| Affan Nazir             | mnazir1   | M-Affan-Nazir     |
-| Basvi Chunara           | basviyog  | basviyog          |
-| Muhammad Salaar Butt    | msbutt1   | msbutt1           |
-| Muhammad Zain Asad      | masad4    | MuhammadZain2005  |
-| Sanika Verma            | sanika3   | SanikaVerma       |
-| Swayam Sagar            | swayam2   | Swayam1129        |
-
----
-
-### Project Description – EventEase
-
-EventEase is a mobile application that connects organizers and entrants around real‑world events.  
-Organizers can create events, manage registrations and waitlists, and automatically select entrants, while entrants can discover nearby events, join waitlists, track invitations, and receive real‑time notifications about their status.
-
-The app focuses on a smooth first‑time experience (device + profile setup, location & notifications), robust event selection logic (including replacements and deadlines), and clear communication through push notifications and in‑app views. Organizers also get tools to visualize entrant locations on a map to support verification when needed.
+<div align="center">
+  
+  **A comprehensive mobile event management system connecting organizers and attendees through smart waitlists, automatic selections, and real-time notifications.**
+  
+  [![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com/)
+  [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
+  [![Google Maps](https://img.shields.io/badge/Google_Maps-4285F4?style=for-the-badge&logo=google-maps&logoColor=white)](https://developers.google.com/maps)
+  [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com/)
+</div>
 
 ---
 
-### Features
+## 📖 About
 
-#### Event Discovery & Participation
-- **Discover Events**: Entrants can browse events with rich cards (title, date, location, poster).
-- **Join Waitlists**: Join events that use waitlists; see up‑to‑date waitlist counts.
-- **Invitations & Selection**:
-  - Receive invitations when selected from the waitlist.
-  - Accept or decline within organizer‑defined deadlines.
-  - Automatic selection and sorry notifications via background services and Cloud Functions.
+**EventEase** bridges the gap between event organizers and attendees by providing a seamless platform for event discovery, registration management, and communication. Whether you're organizing a local meetup or attending concerts, EventEase handles the complexity of waitlists, capacity management, and attendee selection—all through an intuitive mobile interface.
 
-#### Organizer Tools
-- **Create & Edit Events**:
-  - Set capacity, sample size, registration window, and selection deadlines.
-  - Configure event start time, guidelines, and notes.
-- **Manage Entrants**:
-  - View waitlisted, selected, admitted, cancelled, and non‑selected entrants.
-  - Run automatic selection and manual replacements while respecting capacity/sample size.
-- **Entrant Location Map**:
-  - View waitlisted entrants on a Google Map (where entrants have granted location permission).
+The app empowers **organizers** to create events with custom capacity limits, manage waitlists intelligently, and track attendee locations for verification. **Attendees** can discover nearby events, join waitlists with a single tap, and receive real-time notifications about their registration status—from selection to admission.
 
-#### Permissions & Onboarding
-- **Profile & Device Setup**:
-  - First‑time flow for profile picture and basic details.
-  - Device‑based authentication to keep users signed in.
-- **Location & Notifications**:
-  - Custom explanation screen for why location and notifications are needed.
-  - Requests runtime permissions in a clear, staged flow.
-
-#### Notifications
-- **Selection / Replacement Notifications**:
-  - Push notifications when an entrant is selected or replaced.
-  - Tapping a selection notification opens the invitation detail page with accept/decline.
-- **Sorry Notifications**:
-  - Sent to non‑selected entrants before the event starts or when deadlines are missed.
-- **Grouped Notification Handling** via a centralized `NotificationHelper` and Cloud Functions.
+Built with Firebase's real-time capabilities and Android's modern UI toolkit, EventEase delivers a robust, scalable solution for event management.
 
 ---
 
-### Technology Stack
+## ✨ Features
 
-- **Platform**: Android (Java, AndroidX, Material Components)
-- **Backend / Data**:
-  - Firebase Authentication
-  - Cloud Firestore
-  - Firebase Storage
-  - Cloud Functions for Firebase (Node.js)
-- **Notifications**:
-  - Firebase Cloud Messaging (FCM)
-  - Android notification channels & grouping
-- **Maps & Location**:
-  - Google Maps SDK for Android
-  - Fused Location Provider API
+### 👥 **For Attendees**
+
+#### 🔍 Event Discovery & Registration
+- Browse events with rich information cards displaying titles, dates, locations, and custom posters
+- Join waitlists instantly with real-time capacity and waitlist count updates
+- Track your event journey through multiple states: waitlisted, selected, admitted, or cancelled
+
+#### 📬 Smart Notifications & Invitations
+- Receive push notifications when selected from a waitlist
+- Accept or decline invitations within organizer-defined deadlines
+- Get automatic "sorry" notifications if not selected or if deadlines are missed
+- Tap notifications to jump directly to relevant event details
+
+#### 📱 Personalized Dashboard
+- View all your events categorized as: Upcoming, Previous, and Invited
+- See invitation status and respond directly from the event detail screen
+- Track event guidelines, notes, and important dates
+
+### 🎯 **For Organizers**
+
+#### ⚙️ Event Creation & Management
+- Create events with detailed configurations:
+  - Set event capacity and sample size for selections
+  - Define registration windows and selection deadlines
+  - Upload custom event posters from device or camera
+  - Add event guidelines, location details, and special notes
+
+#### 📊 Intelligent Waitlist Management
+- View all entrants organized by status: Waitlisted, Selected, Admitted, Cancelled, Non-Selected
+- Run automatic lottery-based selection from waitlists
+- Manually select replacement entrants when spots open up
+- Respect capacity constraints and sampling rules automatically
+
+#### 🗺️ Location Tracking & Verification
+- View waitlisted attendees on an interactive Google Map
+- See geolocation data for attendees who granted location permissions
+- Verify attendee proximity for location-restricted events
+
+#### 🤖 Automated Backend Operations
+- Cloud Functions handle automatic selections at deadline times
+- Send batch notifications to selected, cancelled, and non-selected entrants
+- Replace declined/cancelled attendees automatically from the waitlist
+
+### 🔐 **Security & Onboarding**
+
+#### 📋 Seamless First-Time Experience
+- Device-based authentication keeps users signed in
+- Guided profile setup with profile picture upload
+- Clear permission requests for location and notifications with explanations
+
+#### 🔔 Permission Management
+- Optional location sharing for event discovery and organizer verification
+- Push notification opt-in with clear value proposition
+- Staged permission requests that respect user choice
 
 ---
 
-### Key Screens & Flows
+## 🎨 Screenshots
 
-- **Main Activity**:
-  - Hosts entrant navigation (Discover, My Events, Account).
-  - Handles deep links and notification navigation (regular event vs invitation view).
+| 🏠 **Event Discovery** | 📅 **My Events** | 🎫 **Event Details** |
+|------------------------|------------------|----------------------|
+| ![Event Discovery](./screenshots/event_discovery.png) | ![My Events](./screenshots/my_events.png) | ![Event Details](./screenshots/event_details.png) |
+| *Browse and discover upcoming events with rich cards* | *Track all your registered and invited events* | *View detailed event information and RSVPs* |
 
-- **Auth & Onboarding**:
-  - Welcome / Login / Signup flow.
-  - Profile picture upload and device/location permission flow.
-
-- **My Events**:
-  - Shows upcoming, previous, and invited events for the current entrant.
-  - Opens `EventDetailActivity` with or without invitation context.
-
-- **Event Detail**:
-  - Displays event info, poster, guidelines, and dynamic waitlist count.
-  - Shows accept/decline buttons when opened with an invitation.
-
-- **Organizer Views**:
-  - Organizer event list, waitlist management, selection helpers, entrant location map.
+| 📬 **Invitation** | ⚙️ **Create Event** | 🗺️ **Waitlist** |
+|-------------------|---------------------|---------------------|
+| ![Invitation](./screenshots/invitation.png) | ![Create Event](./screenshots/create_event.png) | ![Waitlist](./screenshots/waitlist.png) |
+| *Accept or decline event invitations* | *Set up events with custom configurations* | *View waitlist* |
 
 ---
 
-### Setup Instructions
+## 🏗️ Architecture & Technology Stack
 
-#### 1. Firebase Configuration
+### **Frontend**
+- **Platform**: Native Android (Java)
+- **UI Framework**: AndroidX, Material Design Components
+- **Navigation**: Fragment-based architecture with Bottom Navigation
+- **Image Loading**: Glide for efficient image caching and loading
+
+### **Backend & Services**
+- **Authentication**: Firebase Authentication (Email/Password, Device-based)
+- **Database**: Cloud Firestore (Real-time NoSQL database)
+- **Storage**: Firebase Storage (Event posters, profile pictures)
+- **Serverless Functions**: Cloud Functions for Firebase (Node.js)
+  - Automatic entrant selection at deadlines
+  - Batch notification processing
+  - Event state management
+
+### **Integrations**
+- **Maps**: Google Maps SDK for Android
+- **Location**: Fused Location Provider API
+- **Notifications**: Firebase Cloud Messaging (FCM) with notification channels
+- **Deep Linking**: Android App Links for notification navigation
+
+### **Design Patterns**
+- Repository pattern for data access
+- Observer pattern for real-time updates
+- Singleton pattern for service managers
+- MVVM-inspired architecture
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Android Studio** (Arctic Fox or later)
+- **JDK 11** or higher
+- **Android SDK** (API 24+)
+- **Firebase Account** (free tier works)
+- **Google Cloud Account** (for Maps API)
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/MuhammadZain2005/EventEase.git
+cd EventEase
+```
+
+### 2. Firebase Setup
 
 1. **Create Firebase Project**
-   - Go to the Firebase Console.
-   - Create a new project or reuse an existing one.
+   - Go to [Firebase Console](https://console.firebase.google.com/)
+   - Click "Add Project" and follow the setup wizard
+   - Choose a project name (e.g., "EventEase")
 
-2. **Enable Products**
-   - Authentication (Email/Password).
-   - Firestore (Native mode).
-   - Storage.
-   - Cloud Functions (for full notification behavior).
+2. **Register Android App**
+   - In Project Settings → Your Apps → Add App → Android
+   - Package name: `com.example.eventease`
+   - Download `google-services.json`
+   - Place it at: `code/EventEase/app/google-services.json`
 
-3. **Android App Registration**
-   - In Project Settings → Your Apps → Android:
-     - Package name: `com.example.eventease`.
-   - Download the generated `google-services.json`.
-   - Place it at: `code/EventEase/app/google-services.json`.
+3. **Enable Firebase Products**
+   - **Authentication**: Enable Email/Password provider
+   - **Firestore Database**: Create database in production mode
+   - **Storage**: Set up default bucket
+   - **Cloud Messaging**: Enabled by default
 
-4. **Firestore & Storage Rules**
-   - Use the provided `firestore.rules` and `storage.rules` in `code/EventEase/`.
-   - In the Firebase Console, open Rules and paste the contents of those files (if required by the assignment spec).
+4. **Configure Security Rules**
+   - Copy the provided `firestore.rules` from `code/EventEase/firestore.rules`
+   - Paste into Firestore Rules editor in Firebase Console
+   - Do the same for `storage.rules`
 
-5. **Cloud Functions (Optional but recommended)**
-   - From the repo root:
-     ```bash
-     cd code/EventEase/functions
-     npm install
-     # To deploy (if you have Firebase CLI configured):
-     # firebase deploy --only functions
-     ```
+5. **Deploy Cloud Functions (Optional)**
+   ```bash
+   cd code/EventEase/functions
+   npm install
+   firebase login
+   firebase deploy --only functions
+   ```
 
-#### 2. Google Maps SDK Setup
+### 3. Google Maps Configuration
 
-The app uses Google Maps to display entrant locations for organizers. The API key is **not** committed; it is read from `local.properties`.
-
-1. **Get your debug SHA‑1**
+1. **Get Debug SHA-1 Certificate**
    ```bash
    keytool -list -v \
      -keystore ~/.android/debug.keystore \
@@ -145,42 +185,156 @@ The app uses Google Maps to display entrant locations for organizers. The API ke
      -storepass android -keypass android | grep SHA1
    ```
 
-2. **Create / Configure Maps API Key**
-   - Go to Google Cloud Console.
-   - Ensure **“Maps SDK for Android”** is enabled.
-   - Create or edit an API key under **APIs & Services → Credentials**.
-   - Add an Android application restriction:
-     - Package: `com.example.eventease`
-     - SHA‑1: your debug SHA‑1 from step 1.
-   - Optionally restrict the key to **Maps SDK for Android** only.
+2. **Create Maps API Key**
+   - Go to [Google Cloud Console](https://console.cloud.google.com/)
+   - Navigate to APIs & Services → Credentials
+   - Create API Key or use existing one
+   - Enable **Maps SDK for Android**
 
-3. **Add API Key to `local.properties`**
-   - Open `code/EventEase/local.properties`.
-   - Ensure it contains:
-     ```properties
-     sdk.dir=/path/to/your/Android/sdk
-     google.maps.api.key=YOUR_GOOGLE_MAPS_API_KEY_HERE
-     ```
+3. **Restrict API Key**
+   - Add Android application restriction:
+     - Package name: `com.example.eventease`
+     - SHA-1 certificate: Your debug SHA-1 from step 1
+   - Restrict to **Maps SDK for Android** API
 
-#### 3. Running the App
+4. **Add to Local Properties**
+   - Open/create `code/EventEase/local.properties`
+   - Add the following lines:
+   ```properties
+   sdk.dir=/path/to/your/Android/sdk
+   google.maps.api.key=YOUR_GOOGLE_MAPS_API_KEY_HERE
+   ```
 
-1. Open the project in Android Studio from the repo root (`CMPUT301F25riscvi`).
-2. Let Gradle sync complete.
-3. Select the `EventEase` app module.
-4. Connect an Android device or start an emulator.
-5. Click **Run** to build and install the app.
+### 4. Build and Run
+
+1. Open the project in **Android Studio**
+2. Wait for Gradle sync to complete
+3. Connect an Android device or start an emulator
+4. Click **Run** (▶️) or press `Shift + F10`
+5. Select your target device and wait for installation
 
 ---
 
-### Documentation
+## 📱 Key User Flows
 
-- [**Wiki**](https://github.com/RISCVI-301/CMPUT301F25riscvi/wiki)
+### **Attendee Journey**
 
-- [**UI Mockups**](https://github.com/RISCVI-301/CMPUT301F25riscvi/wiki/Updated-UI-Mockup-(PART-4))
+1. **Onboarding**
+   - First launch → Welcome screen
+   - Device authentication setup
+   - Profile creation with optional picture upload
+   - Permission requests (location & notifications)
 
-- [**UI Storyboard**](https://github.com/RISCVI-301/CMPUT301F25riscvi/wiki/Updated-Storyboard-Sequence-(PART-4))
+2. **Discovering Events**
+   - Browse event feed on Discover tab
+   - Filter by date, location, or category
+   - View event details with poster and guidelines
 
-- [**Sprint Planning** ](https://github.com/RISCVI-301/CMPUT301F25riscvi/wiki/Sprint-Planning-and-Review)
+3. **Joining & Tracking**
+   - Tap "Join Waitlist" on event detail page
+   - Receive confirmation and waitlist position
+   - Track status in "My Events" tab
+   - Get notified when selected
 
-- [**UML**](https://github.com/RISCVI-301/CMPUT301F25riscvi/wiki/Final-UML-Class-Diagram-Based-on-CodeBase)
+4. **Responding to Invitations**
+   - Receive push notification
+   - Tap to open invitation detail
+   - Accept or decline within deadline
+   - Receive confirmation notification
 
+### **Organizer Journey**
+
+1. **Creating Events**
+   - Navigate to Organizer section
+   - Fill in event details (title, date, location)
+   - Upload event poster
+   - Set capacity, sample size, and deadlines
+   - Add guidelines and notes
+
+2. **Managing Registrations**
+   - View waitlist with real-time count
+   - Run automatic selection lottery
+   - Manually replace cancelled attendees
+   - Track admitted vs. cancelled vs. pending
+
+3. **Monitoring Attendees**
+   - Open attendee location map
+   - Verify proximity for location-based events
+   - Export attendee lists (if needed)
+
+---
+
+## 🗂️ Project Structure
+
+```
+EventEase/
+├── code/
+│   └── EventEase/
+│       ├── app/
+│       │   ├── src/
+│       │   │   ├── main/
+│       │   │   │   ├── java/com/example/eventease/
+│       │   │   │   │   ├── activities/       # UI screens
+│       │   │   │   │   ├── adapters/        # RecyclerView adapters
+│       │   │   │   │   ├── fragments/       # Fragment classes
+│       │   │   │   │   ├── models/          # Data models
+│       │   │   │   │   ├── services/        # Background services
+│       │   │   │   │   └── utils/           # Helper classes
+│       │   │   │   ├── res/                 # Resources
+│       │   │   │   └── AndroidManifest.xml
+│       │   └── google-services.json         # Firebase config
+│       ├── functions/                        # Cloud Functions
+│       ├── firestore.rules                   # Firestore security
+│       └── storage.rules                     # Storage security
+├── doc/                                      # Documentation
+└── README.md
+```
+
+---
+## 📚 Documentation
+
+- **[Wiki](https://github.com/RISCVI-301/CMPUT301F25riscvi/wiki)** - Comprehensive project documentation
+- **[UI Mockups](https://github.com/RISCVI-301/CMPUT301F25riscvi/wiki/Updated-UI-Mockup-(PART-4))** - Design prototypes and wireframes
+- **[Storyboard](https://github.com/RISCVI-301/CMPUT301F25riscvi/wiki/Updated-Storyboard-Sequence-(PART-4))** - User flow sequences
+- **[UML Diagrams](https://github.com/RISCVI-301/CMPUT301F25riscvi/wiki/Final-UML-Class-Diagram-Based-on-CodeBase)** - System architecture
+- **[Sprint Planning](https://github.com/RISCVI-301/CMPUT301F25riscvi/wiki/Sprint-Planning-and-Review)** - Development timeline
+
+---
+
+## 👥 Team RISCVI
+
+| Name | Role | GitHub |
+|------|------|--------|
+| **Muhammad Zain Asad** | Lead Developer | [@MuhammadZain2005](https://github.com/MuhammadZain2005) |
+| **Affan Nazir** | Backend Developer | [@M-Affan-Nazir](https://github.com/M-Affan-Nazir) |
+| **Muhammad Salaar Butt** | Android Developer | [@msbutt1](https://github.com/msbutt1) |
+| **Basvi Chunara** | UI/UX Designer | [@basviyog](https://github.com/basviyog) |
+| **Sanika Verma** | QA Engineer | [@SanikaVerma](https://github.com/SanikaVerma) |
+| **Swayam Sagar** | DevOps | [@Swayam1129](https://github.com/Swayam1129) |
+
+---
+
+## 🤝 Contributing
+
+This project was developed as part of CMPUT 301 (Fall 2025) at the University of Alberta. While the main development is complete, we welcome feedback and suggestions!
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 🙏 Acknowledgments
+
+- **University of Alberta** - CMPUT 301 Course Staff
+- **Firebase** - For providing robust backend infrastructure
+- **Google Maps Platform** - For location services and mapping
+- **Material Design** - For UI component guidelines
+- **AndroidX** - For modern Android development tools
+
+
+<div align="center">
+  Made with ❤️ by Team RISCVI
+</div>
