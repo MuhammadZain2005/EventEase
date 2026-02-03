@@ -85,12 +85,12 @@ Built with Firebase's real-time capabilities and Android's modern UI toolkit, Ev
 
 | 🏠 **Event Discovery** | 📅 **My Events** | 🎫 **Event Details** |
 |------------------------|------------------|----------------------|
-| ![Event Discovery](./screenshots/event_discovery.png) | ![My Events](./screenshots/my_events.png) | ![Event Details](./screenshots/event_details.png) |
+| ![Event Discovery](event_discovery.png) | ![My Events](my_events.png) | ![Event Details](event_details.png) |
 | *Browse and discover upcoming events with rich cards* | *Track all your registered and invited events* | *View detailed event information and RSVPs* |
 
 | 📬 **Invitation** | ⚙️ **Create Event** | 🗺️ **Waitlist** |
 |-------------------|---------------------|---------------------|
-| ![Invitation](./screenshots/invitation.png) | ![Create Event](./screenshots/create_event.png) | ![Waitlist](./screenshots/waitlist.png) |
+| ![Invitation](invitation.png) | ![Create Event](create_event.png) | ![Waitlist](waitlist.png) |
 | *Accept or decline event invitations* | *Set up events with custom configurations* | *View waitlist* |
 
 ---
